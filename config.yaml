@@ -1,0 +1,50 @@
+# ==============================================================================
+# Continue Extension Configuration for Windows
+# Ready to copy directly to: C:\Users\<YourUsername>\.continue\config.yaml
+# Compatible with Continue v1.x+ in VS Code
+# ==============================================================================
+name: Local RTL Engineering Suite
+version: 0.0.1
+schema: v1
+
+models:
+  # 1. Primary Model: Architecture, Deep Reasoning & Complex RTL Generation
+  - name: Qwen 2.5 Coder (32B)
+    provider: ollama
+    model: qwen2.5-coder:32b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+
+  # 2. Secondary Model: Code Review, Refactoring & Verification Analysis
+  - name: DeepSeek Coder V2 (16B)
+    provider: ollama
+    model: deepseek-coder-v2:16b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+
+  # 3. Fast Model: Quick Chat, Inline Edits & Real-Time Tab Autocomplete
+  - name: Qwen 2.5 Coder (7B)
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+      - autocomplete
+
+customCommands:
+  - name: rtl-testbench
+    prompt: "Generate a comprehensive, self-checking Verilog/SystemVerilog testbench for the selected RTL module. Include realistic clock/reset generators, corner case stimulus, assertions, and $dumpfile for GTKWave."
+    description: "Generate self-checking testbench for selected code"
+
+  - name: rtl-lint
+    prompt: "Review the selected RTL code for synthesis issues, unintended latches, improper blocking/non-blocking assignments, reset bugs, or clock domain crossing risks."
+    description: "Lint RTL for synthesis & timing hazards"
+
+  - name: rtl-synth
+    prompt: "Analyze the selected RTL module for logic synthesis targeting open cell libraries (NanGate 45nm or SkyWater 130nm in techlib/). Explain technology mapping trade-offs, sequential/combinational cells, timing/area implications, and synthesis commands."
+    description: "Analyze & synthesize module with open standard cell libraries"
